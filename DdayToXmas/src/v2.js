@@ -5,7 +5,7 @@ const time2 = {}
 // You're gonna need this
 function getTime2() {
   // Don't delete this.
-    const xmasDay = new Date("2021-12-24:00:00:00+0900");
+    const xmasDay = new Date("2021/12/24:00:00:00");
     const today = new Date();
 
     //   total raw value
