@@ -19,7 +19,9 @@ function getTime() {
   const hour = totalHour > 24 ? totalHour % 24 : totalHour;
   const day = totalDate;
 
-    return `d-day ${day} days ${hour} hrs ${min} mins ${sec} sec`;
+    return `d-day ${day} days ${hour < 10 ? `0${hour}` : hour} hrs ${
+      min < 10 ? `0${min}` : min} mins ${
+        sec < 10 ? `0${sec}` : sec} sec`;
 }
 
 // set text
