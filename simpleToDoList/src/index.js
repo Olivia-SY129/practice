@@ -17,6 +17,51 @@ function saveToFinished() {
     localStorage.setItem(FINISHED_LS, JSON.stringify(finished));
 }
 
+function removeList(event) {
+    const btn = event.target;
+    const li = btn.parentNode;
+    const ul = li.parentNode;
+    const dataArr = (ul.className === 'pendingList')? pendings : finished;
+    
+        // remove an target element and local storage data
+        ul.removeChild(li);
+        li.removeChild(btn);
+        const index = parseInt(li.id);
+        dataArr.splice(index, 1);
+
+        // change ids of rest elements and local storage data
+        const listsArr = [].slice.call(ul.getElementsByTagName('li'));
+        
+        listsArr.map((li) => {
+            const id = parseInt(li.id);
+            if(id > index) {
+                return li.id--;
+            }
+        })
+
+        dataArr.forEach((obj) => {
+            if(obj.id > index) {
+                return obj.id--;
+            }
+        })
+        
+        saveToPending();
+        saveToFinished();
+    
+}
+
+function moveToFin(event) {
+    const text = event.target.parentNode.firstChild.innerText;
+    removeList(event);
+    addFinished(text);
+}
+
+function moveToPending(event) {
+    const text = event.target.parentNode.firstChild.innerText;
+    removeList(event);
+    addTask(text);
+}
+
 function addTask(text) {
     const li = document.createElement("li");
     const finBtn = document.createElement("button");
@@ -40,6 +85,10 @@ function addTask(text) {
     };
     pendings.push(pendingObj);
     saveToPending();
+
+    // change status
+    delbtn.addEventListener('click', removeList);
+    finBtn.addEventListener('click', moveToFin);
 }
 
 function addFinished(text) {
@@ -57,13 +106,18 @@ function addFinished(text) {
     li.appendChild(span);
     li.appendChild(pendingBtn);
     li.appendChild(delbtn);
-    pendingList.appendChild(li);
+    finishedList.appendChild(li);
 
     const finishedObj = {
         text: text,
         id: id,
     };
     finished.push(finishedObj);
+    saveToFinished();
+
+    // change status
+    delbtn.addEventListener('click', removeList);
+    pendingBtn.addEventListener('click', moveToPending);
 }
 
 function handleSubmit(event) {
