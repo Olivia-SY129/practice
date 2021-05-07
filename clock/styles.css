@@ -1,0 +1,22 @@
+.clock-face {
+}
+
+.hand {
+  width: 30%;
+  height: 6px;
+  background-color: black;
+  position: absolute;
+  top: 50%;
+  transform-origin: 100%;
+  transform: rotate(90deg);
+  transition: all 0.5s;
+}
+
+.hour-hand {
+  height: 8px;
+  background-color: grey;
+}
+
+.second-hand {
+  height: 3px;
+}
