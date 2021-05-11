@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0 auto;
+            height: 100vh;
+            background: black;
+            cursor: none;
+
+        }
+        .line{
+            background-color: white;
+            position: absolute;
+        }
+
+        .vertical{
+            width: 1px;
+            height: 100vh;
+            transform: translate(50vw, 0);
+        }
+
+        .horizontal{
+            width: 100vw;
+            height: 1px;
+            transform: translate(0, 50vh)
+        }
+
+        .target {
+            width: 50px;
+            height: 50px;
+            border: white 2px solid;
+            border-radius: 50%;
+            position: absolute;
+            transform: translate(calc(-50% + 50vw), calc(-50% + 50vh));
+        }
+
+        .coords {
+            color: white;
+            position: absolute;
+            transform: translate(20px, 20px);
+        }
+    </style>
+</head>
+<body>
+        <div class="line vertical"></div>
+        <div class="line horizontal"></div>
+        <div class="target"></div>
+        <span class="coords"></span>
+
+
+    <script>
+        const vertical = document.querySelector('.vertical');
+        const horizontal = document.querySelector('.horizontal');
+        const target = document.querySelector('.target');
+        const coords = document.querySelector('.coords');
+
+        function followMouse(e) {
+            const x = e.clientX;
+            const y = e.clientY;
+            
+            vertical.style.transform = `translateX(${x}px)`;
+            horizontal.style.transform = `translateY(${y}px)`;
+            target.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+            coords.style.transform = `translate(${x + 20}px, ${y + 20}px)`;
+            coords.innerText = `(${x}, ${y})`
+        }
+
+        window.addEventListener('mousemove', followMouse);
+    </script>
+</body>
+</html>
